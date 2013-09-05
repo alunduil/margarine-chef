@@ -1,0 +1,1 @@
+default["spread"]["path"] = "/srv/www/"

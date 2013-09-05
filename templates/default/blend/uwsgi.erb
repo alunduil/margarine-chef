@@ -1,0 +1,8 @@
+# simple uWSGI script
+ 
+description "uwsgi tiny instance"
+#start on socket PROTO=inet PORT=3031
+start on runlevel [2345]
+stop on runlevel [06]
+ 
+exec uwsgi --socket 127.0.0.1:3031 --master --processes 4 --die-on-term --chdir /srv/www/margarine --wsgi-file conf/blend.wsgi

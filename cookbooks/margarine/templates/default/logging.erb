@@ -1,0 +1,52 @@
+[loggers]
+keys = root, margarine, margarine_debug
+
+[logger_root]
+level = INFO
+handlers = file_h
+
+[logger_margarine]
+level = INFO
+handlers = file_h
+qualname = margarine
+
+[logger_margarine_debug]
+level = DEBUG
+handlers = file_debug_h
+qualname = margarine
+
+[handlers]
+keys = syslog_h, syslog_debug_h, file_h, file_debug_h
+
+[handler_file_h]
+class = FileHandler
+level = INFO
+formatter = default_f
+args = ("/var/log/margarine/margarine.log",)
+
+[handler_file_debug_h]
+class = FileHandler
+level = DEBUG
+formatter = default_debug_f
+args = ("/var/log/margarine/margarine.debug.log",)
+
+[handler_syslog_h]
+class = handlers.SysLogHandler
+level = INFO
+formatter = default_f
+args = ()
+
+[handler_syslog_debug_h]
+class = handlers.SysLogHandler
+level = DEBUG
+formatter = default_debug_f
+args = ()
+
+[formatters]
+keys = default_f, default_debug_f
+
+[formatter_default_f]
+formet = %(asctime)s [spread] %(name)s:%(levelname)s: %(process)d: %(message)s
+
+[formatter_default_debug_f]
+format = %(asctime)s [spread] %(filename)s:%(lineno)d: %(process)d: %(message)s

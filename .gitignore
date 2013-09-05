@@ -1,0 +1,22 @@
+.rake_test_cache
+.vagrant
+.kitchen
+###
+# Ignore Chef key files and secrets
+###
+.chef/*.pem
+.chef/encrypted_data_bag_secret
+
+# OS X ignore files
+_Store
+.AppleDouble
+.LSOverride
+Icon
+
+
+# Thumbnails
+# ._*
+#
+# # Files that might appear on external disk
+# .Spotlight-V100
+# .Trashes

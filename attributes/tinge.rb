@@ -1,0 +1,1 @@
+default['margarine']['tinge']['endpoint'] = "http://api.margarine.raxsavvy.com/v1/"
