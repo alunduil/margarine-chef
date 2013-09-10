@@ -1,6 +1,7 @@
 .rake_test_cache
 .vagrant
 .kitchen
+*.lock
 ###
 # Ignore Chef key files and secrets
 ###
