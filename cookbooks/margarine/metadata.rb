@@ -1,7 +1,0 @@
-name "spread"
-version "1.0.0"
-description "Consumer for the Margarine Application"
-maintainer "Hart Hoover"
-maintainer_email "hart.hoover@rackspace.com"
-depends "python"
-depends "apt"
