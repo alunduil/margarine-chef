@@ -18,18 +18,52 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-default['margarine']['path'] = "/srv/www/"
-default['margarine']['pyrax_user'] = "RAX_USER"
-default['margarine']['pyrax_apikey'] = "RAX_API_KEY"
-default['margarine']['pyrax_region'] = "RAX_REGION"
+default['margarine']['tinge']['url'] = 'http://' + node['hostname']
 
-default['margarine']['queue_user'] = "guest"
-default['margarine']['queue_password'] = "guest"
-default['margarine']['queue_hostname'] = "mq1.margarine.raxsavvy.com"
+default['margarine']['blend']['url'] = 'http://api.' + node['hostname'] + '/v1/'
 
-default['margarine']['mongodb_user'] = "margarine"
-default['margarine']['mongodb_password'] = "margarineisawesome!"
-default['margarine']['mongodb_connection_string'] = "mongo.objectrocket.com:12345"
-default['margarine']['mongodb_database'] = "production"
+default['margarien']['datastore']['type'] = 'mongodb'
+default['margarine']['datastore']['username'] = nil
+default['margarine']['datastore']['password'] = nil
+default['margarine']['datastore']['hostname'] = 'localhost'
+default['margarine']['datastore']['port'] = 27017
+default['margarine']['datastore']['database'] = 'production'
 
-default['margarine']['redis_url'] = "redis://redis.margarine.raxsavvy.com"
+default['margarine']['pyrax']['username'] = nil
+default['margarine']['pyrax']['password'] = nil
+default['margarine']['pyrax']['type'] = 'rackspace'
+
+default['margarine']['email']['type'] = 'smtp'
+default['margarine']['email']['username'] = nil
+default['margarine']['email']['password'] = nil
+default['margarine']['email']['hostname'] = 'localhost'
+default['margarine']['email']['port'] = 25
+default['margarine']['email']['from'] = 'no-reply@' + node['hostname']
+
+default['margarine']['flask']['host'] = 'localhost'
+default['margarine']['flask']['port'] = 5000
+default['margarine']['flask']['debug'] = false
+
+default['margarine']['service']['type'] = :uwsgi
+
+default['margarine']['uwsgi']['host'] = 'localhost'
+default['margarine']['uwsgi']['port'] = 5000
+
+default['margarine']['token_store']['type'] = 'redis'
+default['margarine']['token_store']['username'] = nil
+default['margarine']['token_store']['password'] = nil
+default['margarine']['token_store']['hostname'] = 'localhost'
+default['margarine']['token_store']['port'] = 6379
+
+# Data Bags for logging configuration items.
+
+default['margarine']['queue']['type'] = 'amqp'
+default['margarine']['queue']['username'] = 'guest'
+default['margarine']['queue']['password'] = 'guest'
+default['margarine']['queue']['hostnaem'] = 'localhost'
+default['margarine']['queue']['port'] = 55672
+default['margarine']['queue']['wait'] = 5
+
+default['margarine']['security']['uuid'] = nil
+
+
