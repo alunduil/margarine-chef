@@ -22,6 +22,12 @@ default['margarine']['tinge'] = false
 default['margarine']['blend'] = false
 default['margarine']['spread'] = false
 
+default['margarine']['user'] = 'margarine'
+default['margarine']['group'] = 'margarine'
+
+default['margarine']['install']['method'] = 'package'
+default['margarine']['logging']['syslog'] = false
+
 default['margarine']['venv'] = false
 default['margarine']['nginx'] = false
 
@@ -72,5 +78,4 @@ default['margarine']['queue']['port'] = 55672
 default['margarine']['queue']['wait'] = 5
 
 default['margarine']['security']['uuid'] = nil
-
 
