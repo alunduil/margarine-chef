@@ -18,9 +18,24 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-default['margarine']['tinge']['url'] = 'http://' + node['hostname']
+default['margarine']['tinge'] = false
+default['margarine']['blend'] = false
+default['margarine']['spread'] = false
 
-default['margarine']['blend']['url'] = 'http://api.' + node['hostname'] + '/v1/'
+default['margarine']['venv'] = false
+default['margarine']['nginx'] = false
+
+default['margarine']['service']['type'] = :uwsgi
+
+default['margarine']['flask']['host'] = 'localhost'
+default['margarine']['flask']['port'] = 5000
+default['margarine']['flask']['debug'] = false
+
+default['margarine']['uwsgi']['host'] = 'localhost'
+default['margarine']['uwsgi']['port'] = 5000
+
+default['margarine']['urls']['tinge'] = 'http://' + node['hostname']
+default['margarine']['urls']['blend'] = 'http://api.' + node['hostname'] + '/v1/'
 
 default['margarien']['datastore']['type'] = 'mongodb'
 default['margarine']['datastore']['username'] = nil
@@ -29,6 +44,7 @@ default['margarine']['datastore']['hostname'] = 'localhost'
 default['margarine']['datastore']['port'] = 27017
 default['margarine']['datastore']['database'] = 'production'
 
+# TODO Watch for URI change coming in margarine.
 default['margarine']['pyrax']['username'] = nil
 default['margarine']['pyrax']['password'] = nil
 default['margarine']['pyrax']['type'] = 'rackspace'
@@ -39,15 +55,6 @@ default['margarine']['email']['password'] = nil
 default['margarine']['email']['hostname'] = 'localhost'
 default['margarine']['email']['port'] = 25
 default['margarine']['email']['from'] = 'no-reply@' + node['hostname']
-
-default['margarine']['flask']['host'] = 'localhost'
-default['margarine']['flask']['port'] = 5000
-default['margarine']['flask']['debug'] = false
-
-default['margarine']['service']['type'] = :uwsgi
-
-default['margarine']['uwsgi']['host'] = 'localhost'
-default['margarine']['uwsgi']['port'] = 5000
 
 default['margarine']['token_store']['type'] = 'redis'
 default['margarine']['token_store']['username'] = nil
