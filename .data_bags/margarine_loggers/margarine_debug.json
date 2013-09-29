@@ -1,0 +1,6 @@
+{
+  'name': 'margarine_debug',
+  'level': 'DEBUG',
+  'qualname': 'margarine',
+  'handlers': 'stream_debug_h'
+}

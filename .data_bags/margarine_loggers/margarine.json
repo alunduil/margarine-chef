@@ -1,0 +1,6 @@
+{
+  'name': 'margarine',
+  'level': 'INFO',
+  'qualname': 'margarine',
+  'handlers': 'stream_h'
+}

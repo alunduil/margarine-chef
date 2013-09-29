@@ -1,0 +1,5 @@
+{
+  'name': 'root',
+  'level': 'INFO',
+  'handlers': 'stream_h'
+}
