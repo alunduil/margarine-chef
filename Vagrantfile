@@ -14,8 +14,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "tinge" do |tinge|
     tinge.vm.network :private_network, ip: "192.168.57.10"
 
-    config.vm.provision :chef_solo do |chef|
-      chef.add_recipe "margarine"
+    tinge.vm.provision :chef_solo do |chef|
       chef.add_recipe "margarine::tinge"
     end
   end
@@ -23,8 +22,7 @@ Vagrant.configure("2") do |config|
   config.vm.define "blend" do |blend|
     blend.vm.network :private_network, ip: "192.168.57.11"
 
-    config.vm.provision :chef_solo do |chef|
-      chef.add_recipe "margarine"
+    blend.vm.provision :chef_solo do |chef|
       chef.add_recipe "margarine::blend"
     end
   end
@@ -32,9 +30,16 @@ Vagrant.configure("2") do |config|
   config.vm.define "spread" do |spread|
     spread.vm.network :private_network, ip: "192.168.57.12"
 
-    config.vm.provision :chef_solo do |chef|
-      chef.add_recipe "margarine"
+    spread.vm.provision :chef_solo do |chef|
       chef.add_recipe "margarine::spread"
+    end
+  end
+
+  config.vm.define 'margarine' do |margarine|
+    margarine.vm.network :private_network, ip: '192.168.57.13'
+
+    margarine.vm.provision :chef_solo do |chef|
+      chef.add_recipe 'margarine'
     end
   end
 end
