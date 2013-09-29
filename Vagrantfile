@@ -39,6 +39,9 @@ Vagrant.configure("2") do |config|
     margarine.vm.network :private_network, ip: '192.168.57.13'
 
     margarine.vm.provision :chef_solo do |chef|
+      chef.data_bags_path = '.data_bags'
+
+      chef.add_recipe 'chef-solo-search'
       chef.add_recipe 'margarine'
     end
   end
