@@ -29,9 +29,9 @@ default['margarine']['install']['method'] = 'package'
 default['margarine']['logging']['syslog'] = false
 
 default['margarine']['venv'] = false
-default['margarine']['nginx'] = false
 
-default['margarine']['service']['type'] = :uwsgi
+default['margarine']['service']['provider'] = :uwsgi
+default['margarine']['service']['proxy'] = nil
 
 default['margarine']['flask']['host'] = 'localhost'
 default['margarine']['flask']['port'] = 5000
