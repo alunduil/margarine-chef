@@ -1,25 +1,31 @@
-name "margarine"
-version "1.0.0"
-description "This tool adds features to an amalgamation of delicious, the social bookmarking application, and readability, the excellent web article renderer."
-maintainer "Hart Hoover"
+name             "margarine"
+maintainer       "Hart Hoover"
 maintainer_email "hart.hoover@rackspace.com"
+license          "as-is"
+description      "Installs and configures margarine's components for deployment."
+long_description IO.read(File.join(File.dirname(__FILE__), 'README.md'))
+version          "2.0.0"
 
-depends "python"
-depends "apt"
+recipe "margarine", "Includes all of the components of margarine by default."
+recipe "margarine::tinge", "Installs the required elements for margarine's tinge."
+recipe "margarine::blend", "Installs required elements for margarine's blend."
+recipe "margarine::spread", "Installs the required elements for margarine's spread."
+recipe "margarine::install", "Runs the appropriate installation for margarine."
+recipe "margarine::install_package", "Installs margarine via the package manager."
+recipe "margarine::install_pip", "Installs margarine via pip."
+recipe "margarine::install_source", "Installs margarine from source via git."
+recipe "margarine::install_source_dependencies", "Installs margarine's dependencies."
+recipe "margarine::user", "Adds the margarine user."
+recipe "margarine::group", "Adds the margarine group."
+recipe "margarine::configure", "Configures margarine (configuration files and directories)."
+recipe "margarine::logging", "Configures margarine's logging configuration file."
+recipe "margarine::service", "Sets up the required services to run margarine."
+recipe "margarine::uwsgi", "Sets up uWSGI as the WSGI handler for margarine."
+recipe "margarine::nginx", "Sets up nginx to proxy for margarine."
 
-supports "ubuntu"
+supports 'ubuntu'
 
-recipe "margarine::default",
-	"Installs and configures services that are common to each margarine service."
-
-recipe "margarine::blend",
-	"Installs the Blend service."
-
-recipe "margarine::spread",
-	"Installs the spread service."
-
-recipe "margarine::tinge",
-	"Installs the tinge service."
+depends 'python'
 
 attribute "margarine/path",
   :display_name => "Deploy Directory",
