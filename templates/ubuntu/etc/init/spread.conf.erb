@@ -1,0 +1,19 @@
+description "Margarine's consumer process, spread"
+
+setuid <%= node['margarine']['user'] %>
+setgid <%= node['margarine']['group'] %>
+
+console output
+
+start on ((
+     started network-interface
+ or  started network-manager
+ or  started networking)
+ and started rsyslog)
+
+stop on runlevel [!345]
+
+<% if node['margarine']['install']['method'] == 'source' -%>
+env PYTHONPATH=<%= node['margarine']['install']['path'] %>
+<% end -%>
+exec <%= node['margarine']['install']['method'] == 'source' ? node['margarine']['install']['path'] : '' %>/bin/spread
