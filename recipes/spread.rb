@@ -18,21 +18,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-include_recipe "apt"
-include_recipe "python::pip"
+node.set['margarine']['spread'] = true
 
-template "/etc/margarine/margarine.ini" do
-  source "spread/spread.erb"
-  mode 0600
-  owner "root"
-  group "root"
-end
-
-bash "start spread" do
-  user "root"
-  cwd node['margarine']['path']
-  code <<-EOH
-  PYTHONPATH="/srv/www/margarine" start-stop-daemon --start -m --pidfile /run/margarine.pid --quiet --background --exec /srv/www/margarine/bin/spread
-  EOH
-  action :run
-end
+include_recipe 'margarine::install'
+include_recipe 'margarine::configure'
+include_recipe 'margarine::service'
