@@ -25,20 +25,17 @@ default['margarine']['spread'] = false
 default['margarine']['user'] = 'margarine'
 default['margarine']['group'] = 'margarine'
 
-default['margarine']['install']['method'] = 'package'
-default['margarine']['logging']['syslog'] = false
+default['margarine']['install']['method'] = 'source' 
+default['margarine']['install']['path'] = '/margarine'
 
-default['margarine']['venv'] = false
+default['margarine']['logging']['default'] = false
 
 default['margarine']['service']['provider'] = :uwsgi
+default['margarine']['service']['hostname'] = 'localhost' 
+default['margarine']['service']['port'] = 5000
 default['margarine']['service']['proxy'] = nil
 
-default['margarine']['flask']['host'] = 'localhost'
-default['margarine']['flask']['port'] = 5000
 default['margarine']['flask']['debug'] = false
-
-default['margarine']['uwsgi']['host'] = 'localhost'
-default['margarine']['uwsgi']['port'] = 5000
 
 default['margarine']['urls']['tinge'] = 'http://' + node['hostname']
 default['margarine']['urls']['blend'] = 'http://api.' + node['hostname'] + '/v1/'
@@ -73,7 +70,7 @@ default['margarine']['token_store']['port'] = 6379
 default['margarine']['queue']['type'] = 'amqp'
 default['margarine']['queue']['username'] = 'guest'
 default['margarine']['queue']['password'] = 'guest'
-default['margarine']['queue']['hostnaem'] = 'localhost'
+default['margarine']['queue']['hostname'] = 'localhost'
 default['margarine']['queue']['port'] = 55672
 default['margarine']['queue']['wait'] = 5
 
