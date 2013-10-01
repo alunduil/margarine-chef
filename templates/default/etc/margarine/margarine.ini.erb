@@ -1,0 +1,38 @@
+<% if node['margarine']['tinge'] -%>
+# TODO Update this with new sections when necessary.
+[api]
+endpoint = <%= node['margarine']['urls']['blend'] %>
+
+<% end -%>
+<% if node['margarine']['service']['provider'] == :flask -%>
+[flask]
+<% if node['margarine']['flask']['debug'] -%>
+debug = true
+<% end -%>
+# TODO Add hostname and port to configuration.
+
+<% end -%>
+<% if node['margarine']['blend'] || node['margarine']['spread'] -%>
+[queue]
+url = <%= uri(node['margarine']['queue']) %>
+
+[datastore]
+url = <%= uri(node['margarine']['datastore']) %>
+
+[keystore]
+url = <%= uri(node['margarine']['token_store']) %>
+
+# TODO Update this with new sections when necessary.
+[server]
+<% if node['margarine']['blend'] -%>
+domain = <%= node['margarine']['urls']['tinge'] %>
+<% end -%>
+<% if node['margarine']['spread'] -%>
+name = <%= node['margarine']['urls']['blend'] %>
+<% end -%>
+
+<% end -%>
+<% if node['margarine']['spread'] -%>
+[email]
+url = <%= uri(node['margarine']['email']) %>
+<% end -%>

@@ -1,0 +1,32 @@
+[loggers]
+keys = <%= @loggers.keys.join(', ') %>
+
+<% @loggers.each do |name, properties| -%>
+[logger_<%= name %>]
+<% properties.each do |name, value| -%>
+<%= name %> = <%= value %>
+<% end -%>
+
+<% end -%>
+
+[handlers]
+keys = <%= @handlers.keys.join(', ') %>
+
+<% @handlers.each do |name, properties| -%>
+[handler_<%= name %>]
+<% properties.each do |name, value| -%>
+<%= name %> = <%= value %>
+<% end -%>
+
+<% end -%>
+
+[formatters]
+keys = <%= @formatters.keys.join(', ') %>
+
+<% @formatters.each do |name, properties| -%>
+[formatter_<%= name %>]
+<% properties.each do |name, value| -%>
+<%= name %> = <%= value %>
+<% end -%>
+
+<% end -%>
