@@ -15,6 +15,19 @@ Vagrant.configure("2") do |config|
     tinge.vm.network :private_network, ip: "192.168.57.10"
 
     tinge.vm.provision :chef_solo do |chef|
+      chef.data_bags_path = '.data_bags'
+      chef.log_level = :info
+
+      chef.json = {
+        :margarine => {
+          :service => {
+            :proxy => :nginx,
+          },
+        },
+      }
+
+      chef.add_recipe 'chef-solo-search'
+      chef.add_recipe 'apt'
       chef.add_recipe "margarine::tinge"
     end
   end
@@ -23,6 +36,19 @@ Vagrant.configure("2") do |config|
     blend.vm.network :private_network, ip: "192.168.57.11"
 
     blend.vm.provision :chef_solo do |chef|
+      chef.data_bags_path = '.data_bags'
+      chef.log_level = :info
+
+      chef.json = {
+        :margarine => {
+          :service => {
+            :proxy => :nginx,
+          },
+        },
+      }
+
+      chef.add_recipe 'chef-solo-search'
+      chef.add_recipe 'apt'
       chef.add_recipe "margarine::blend"
     end
   end
@@ -31,6 +57,19 @@ Vagrant.configure("2") do |config|
     spread.vm.network :private_network, ip: "192.168.57.12"
 
     spread.vm.provision :chef_solo do |chef|
+      chef.data_bags_path = '.data_bags'
+      chef.log_level = :info
+
+      chef.json = {
+        :margarine => {
+          :service => {
+            :proxy => :nginx,
+          },
+        },
+      }
+
+      chef.add_recipe 'chef-solo-search'
+      chef.add_recipe 'apt'
       chef.add_recipe "margarine::spread"
     end
   end
@@ -40,8 +79,18 @@ Vagrant.configure("2") do |config|
 
     margarine.vm.provision :chef_solo do |chef|
       chef.data_bags_path = '.data_bags'
+      chef.log_level = :info
+
+      chef.json = {
+        :margarine => {
+          :service => {
+            :proxy => :nginx,
+          },
+        },
+      }
 
       chef.add_recipe 'chef-solo-search'
+      chef.add_recipe 'apt'
       chef.add_recipe 'margarine'
     end
   end
