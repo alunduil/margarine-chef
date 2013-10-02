@@ -18,6 +18,10 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-include_recipe "margarine::install_#{node['margarine']['install']['method']}"
+if node['margarine']['install']['method'].nil?
+  include_recipe 'margarine::install_source_dependencies'
+else
+  include_recipe "margarine::install_#{node['margarine']['install']['method']}"
+end
 
 include_recipe "margarine::user"
