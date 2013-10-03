@@ -18,14 +18,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-node.default['margarine']['logging']['default'] = true
-
-# This is necessary as the attributes are set too late otherwise.  If we could
-# find a way to use the recipe set of these rather than set them here, that
-# would be awesome.
-node.set['margarine']['tinge'] = true
-node.set['margarine']['blend'] = true
-node.set['margarine']['spread'] = true
+include_recipe 'margarine::mark_components'
 
 include_recipe 'margarine::tinge'
 include_recipe 'margarine::blend'

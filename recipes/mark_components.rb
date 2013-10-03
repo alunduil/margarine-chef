@@ -18,8 +18,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-include_recipe 'margarine::mark_components'
-
-include_recipe 'margarine::install'
-include_recipe 'margarine::configure'
-include_recipe 'margarine::service'
+%w{ tinge blend spread }.each do |component|
+  node.set['margarine'][component] = true unless node['recipes'].select { |r| /^margarine(?:::#{component})?/ =~ r }.empty?
+end

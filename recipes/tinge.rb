@@ -18,7 +18,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-node.set['margarine']['tinge'] = true
+include_recipe 'margarine::mark_components'
 
 include_recipe 'margarine::install'
 include_recipe 'margarine::configure'
