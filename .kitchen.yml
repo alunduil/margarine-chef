@@ -12,6 +12,7 @@ platforms:
 suites:
 - name: default
   run_list:
-    - recipe[margarine::default]
-    - recipe[margarine::blend]
+    - recipe[chef-solo-search]
+    - recipe[apt]
+    - recipe[margarine]
   attributes: {}
