@@ -18,6 +18,10 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+if Chef::Config[:solo] && !node['recipes'].include?('chef-solo-search')
+  Chef::Application.fatal!('When running chef-solo the chef-solo-search cookbook must be in your run_list!')
+end
+
 loggers = {}
 
 if node['margarine']['logging']['default']

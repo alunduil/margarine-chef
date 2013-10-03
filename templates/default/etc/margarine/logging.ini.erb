@@ -1,3 +1,4 @@
+<% unless @loggers.empty? -%>
 [loggers]
 keys = <%= @loggers.keys.join(', ') %>
 
@@ -9,6 +10,8 @@ keys = <%= @loggers.keys.join(', ') %>
 
 <% end -%>
 
+<% end -%>
+<% unless @handlers.empty? -%>
 [handlers]
 keys = <%= @handlers.keys.join(', ') %>
 
@@ -20,6 +23,8 @@ keys = <%= @handlers.keys.join(', ') %>
 
 <% end -%>
 
+<% end -%>
+<% unless @formatters.empty? -%>
 [formatters]
 keys = <%= @formatters.keys.join(', ') %>
 
@@ -27,6 +32,8 @@ keys = <%= @formatters.keys.join(', ') %>
 [formatter_<%= name %>]
 <% properties.each do |name, value| -%>
 <%= name %> = <%= value %>
+<% end -%>
+
 <% end -%>
 
 <% end -%>
