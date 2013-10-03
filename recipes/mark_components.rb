@@ -19,5 +19,5 @@
 # THE SOFTWARE.
 
 %w{ tinge blend spread }.each do |component|
-  node.set['margarine'][component] = true unless node['recipes'].select { |r| /^margarine(?:::#{component})?/ =~ r }.empty?
+  node.set['margarine'][component] = true unless node['recipes'].select { |r| /^margarine(?:::#{component})?$/ =~ r }.empty?
 end
