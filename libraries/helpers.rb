@@ -30,33 +30,35 @@ module Margarine
     def uri(components)
       str = ''
 
-      if _ = components.fetch('type', nil)
+      unless (_ = components.fetch('type', nil)).nil?
         str << _
         str << '://'
       end
 
-      if _ = components.fetch('username', nil)
+      unless (_ = components.fetch('username', nil)).nil?
         str << _
-        if _ = components.fetch('password', nil)
+        unless (_ = components.fetch('password', nil)).nil?
           str << ':'
           str << _
         end
         str << '@'
       end
 
-      if _ = components.fetch('hostname', nil)
+      unless (_ = components.fetch('hostname', nil)).nil?
         str << _
       end
 
-      if _ = components.fetch('port', nil)
+      unless (_ = components.fetch('port', nil)).nil?
         str << ':'
         str << _.to_s
       end
 
-      if _ = components.fetch('database', nil)
+      unless (_ = components.fetch('database', nil)).nil?
         str << '/'
         str << _
       end
+
+      str
     end
 
   end
