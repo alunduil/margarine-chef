@@ -21,18 +21,17 @@
 package 'nginx'
 
 %w{ tinge blend }.each do |service|
-  if node['margarine'][service]
-    template "/etc/nginx/conf.d/#{service}.conf" do
-      source 'etc/nginx/conf.d/service.conf'
-      owner 'root'
-      group 'root'
-      mode 00600
-      variables(
-        :service => service,
-        :name => node['margarine']['urls'][service].sub('http://', '').sub(/\/v\d+\//, ''),
-      )
-      notifies :restart, 'service[nginx]'
-    end
+  template "/etc/nginx/conf.d/#{service}.conf" do
+    source 'etc/nginx/conf.d/service.conf'
+    owner 'root'
+    group 'root'
+    mode 00600
+    variables(
+      :service => service,
+      :name => node['margarine']['urls'][service].sub('http://', '').sub(/\/v\d+\//, ''),
+    )
+    notifies :restart, 'service[nginx]'
+    only_if { node['margarine'][service] =~ /tinge|blend/i }
   end
 end
 
