@@ -19,9 +19,9 @@
 # THE SOFTWARE.
 
 if %w{ blend tinge }.any? { |s| node['margarine'][s] }
-  include_recipe "margarine::#{node['margarine']['service']['provider']}"
+  include_recipe "margarine::service_#{node['margarine']['service']['provider']}"
 
-  include_recipe "margarine::#{node['margarine']['service']['proxy']}" unless node['margarine']['service']['proxy'].nil?
+  include_recipe "margarine::proxy_#{node['margarine']['service']['proxy']}" unless node['margarine']['service']['proxy'].nil?
 end
 
 if %w{ spread }.any? { |s| node['margarine'][s] }
