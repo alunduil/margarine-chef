@@ -23,6 +23,22 @@ suites:
     - recipe[margarine::tinge]
   attributes: {}
 
+- name: tinge-nginx
+  run_list:
+    - recipe[margarine::tinge]
+  attributes:
+    margarine:
+      service:
+        proxy: nginx
+
+- name: blend
+  run_list:
+    - recipe[margarine::blend]
+  attributes:
+    margarine:
+      service:
+        proxy: nginx
+
 - name: blend
   run_list:
     - recipe[margarine::blend]
