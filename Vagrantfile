@@ -13,9 +13,9 @@ Vagrant.configure("2") do |config|
 
   [ :tinge, :blend, :spread ].each do |component|
     config.vm.define component do |box|
-      #box.vm.network :private_network, ip: 
-
       box.vm.provision :chef_solo do |chef|
+        chef.data_bags_path = 'data_bags'
+
         chef.add_recipe 'chef-solo-search'
         chef.add_recipe 'apt'
         chef.add_recipe "margarine::#{component}"
@@ -24,9 +24,9 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define 'margarine' do |margarine|
-    #margarine.vm.network :private_network, ip: '192.168.57.13'
-
     margarine.vm.provision :chef_solo do |chef|
+      chef.data_bags_path = 'data_bags'
+
       chef.add_recipe 'chef-solo-search'
       chef.add_recipe 'apt'
       chef.add_recipe 'margarine'
