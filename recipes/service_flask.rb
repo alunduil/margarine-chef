@@ -18,29 +18,28 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-if %w{ blend tinge }.any? { |s| node['margarine'][s] }
-  include_recipe "margarine::service_#{node['margarine']['service']['provider']}"
-
-  include_recipe "margarine::proxy_#{node['margarine']['service']['proxy']}" unless node['margarine']['service']['proxy'].nil?
-end
-
-if %w{ spread }.any? { |s| node['margarine'][s] }
-  template '/etc/init/spread.conf' do
-    source 'etc/init/margarine.conf.erb'
-    owner 'root'
-    group 'root'
-    mode 00644
-    variables(
-      :service => 'spread',
-    )
-    notifies :restart, 'service[spread]'
-  end
-
-  service 'spread' do
-    case node['platform']
-    when 'ubuntu'
-      provider Chef::Provider::Service::Upstart
+%w{ tinge blend }.each do |service|
+  if node['margarine'][service]
+    template "/etc/init/#{service}.conf" do
+      source 'etc/init/margarine.conf.erb'
+      owner 'root'
+      group 'root'
+      mode 00644
+      variables(
+        :service => service,
+      )
+      notifies :restart, "service[#{service}]"
     end
-    action [ :start, :enable ]
+
+    service service do
+      case node['platform']
+      when 'ubuntu'
+        provider Chef::Provider::Service::Upstart
+      end
+      action [ :start, :enable ]
+      subscribes :restart, "template[/etc/margarine/margarine.ini]"
+      subscribes :restart, "template[/etc/margarine/logging.ini]"
+      subscribes :restart, "template[/etc/margarine/pyrax.ini]"
+    end
   end
 end

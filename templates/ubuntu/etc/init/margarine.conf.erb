@@ -1,4 +1,4 @@
-description "Margarine's consumer process, spread"
+description "Margarine daemon process."
 
 setuid <%= node['margarine']['user'] %>
 setgid <%= node['margarine']['group'] %>
@@ -16,4 +16,4 @@ stop on runlevel [!345]
 <% if node['margarine']['install']['method'] == 'source' -%>
 env PYTHONPATH=<%= node['margarine']['install']['path'] %>
 <% end -%>
-exec <%= node['margarine']['install']['method'] == 'source' ? node['margarine']['install']['path'] : '' %>/bin/spread
+exec <%= node['margarine']['install']['method'] == 'source' ? node['margarine']['install']['path'] : '' %>/bin/<%= @service %>
