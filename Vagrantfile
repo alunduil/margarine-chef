@@ -16,6 +16,14 @@ Vagrant.configure("2") do |config|
       box.vm.provision :chef_solo do |chef|
         chef.data_bags_path = 'data_bags'
 
+        chef.json = {
+          :margarine => {
+            :logging => {
+              :default => true,
+            },
+          },
+        }
+
         chef.add_recipe 'chef-solo-search'
         chef.add_recipe 'apt'
         chef.add_recipe "margarine::#{component}"
@@ -26,6 +34,14 @@ Vagrant.configure("2") do |config|
   config.vm.define 'margarine' do |margarine|
     margarine.vm.provision :chef_solo do |chef|
       chef.data_bags_path = 'data_bags'
+
+      chef.json = {
+        :margarine => {
+          :logging => {
+            :default => true,
+          },
+        },
+      }
 
       chef.add_recipe 'chef-solo-search'
       chef.add_recipe 'apt'
