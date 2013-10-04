@@ -5,90 +5,28 @@ Vagrant.require_plugin "vagrant-omnibus"
 Vagrant.require_plugin "vagrant-berkshelf"
 
 Vagrant.configure("2") do |config|
-  config.omnibus.chef_version = :latest
   config.vm.box = "precise64"
   config.vm.box_url = "http://files.vagrantup.com/precise64.box"
 
+  config.omnibus.chef_version = :latest
   config.berkshelf.enabled = true
 
-  config.vm.define "tinge" do |tinge|
-    tinge.vm.network :private_network, ip: "192.168.57.10"
+  [ :tinge, :blend, :spread ].each do |component|
+    config.vm.define component do |box|
+      #box.vm.network :private_network, ip: 
 
-    tinge.vm.provision :chef_solo do |chef|
-      chef.data_bags_path = '.data_bags'
-      chef.log_level = :info
-
-      chef.json = {
-        :margarine => {
-          :service => {
-            :proxy => :nginx,
-          },
-        },
-      }
-
-      chef.add_recipe 'chef-solo-search'
-      chef.add_recipe 'apt'
-      chef.add_recipe "margarine::tinge"
-    end
-  end
-
-  config.vm.define "blend" do |blend|
-    blend.vm.network :private_network, ip: "192.168.57.11"
-
-    blend.vm.provision :chef_solo do |chef|
-      chef.data_bags_path = '.data_bags'
-      chef.log_level = :info
-
-      chef.json = {
-        :margarine => {
-          :service => {
-            :proxy => :nginx,
-          },
-        },
-      }
-
-      chef.add_recipe 'chef-solo-search'
-      chef.add_recipe 'apt'
-      chef.add_recipe "margarine::blend"
-    end
-  end
-
-  config.vm.define "spread" do |spread|
-    spread.vm.network :private_network, ip: "192.168.57.12"
-
-    spread.vm.provision :chef_solo do |chef|
-      chef.data_bags_path = '.data_bags'
-      chef.log_level = :info
-
-      chef.json = {
-        :margarine => {
-          :service => {
-            :proxy => :nginx,
-          },
-        },
-      }
-
-      chef.add_recipe 'chef-solo-search'
-      chef.add_recipe 'apt'
-      chef.add_recipe "margarine::spread"
+      box.vm.provision :chef_solo do |chef|
+        chef.add_recipe 'chef-solo-search'
+        chef.add_recipe 'apt'
+        chef.add_recipe "margarine::#{component}"
+      end
     end
   end
 
   config.vm.define 'margarine' do |margarine|
-    margarine.vm.network :private_network, ip: '192.168.57.13'
+    #margarine.vm.network :private_network, ip: '192.168.57.13'
 
     margarine.vm.provision :chef_solo do |chef|
-      chef.data_bags_path = '.data_bags'
-      chef.log_level = :info
-
-      chef.json = {
-        :margarine => {
-          :service => {
-            :proxy => :nginx,
-          },
-        },
-      }
-
       chef.add_recipe 'chef-solo-search'
       chef.add_recipe 'apt'
       chef.add_recipe 'margarine'
