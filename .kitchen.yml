@@ -8,11 +8,27 @@ platforms:
   driver_config:
     box: opscode-ubuntu-12.04
     box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_provisionerless.box
+  run_list:
+    - recipe[apt]
+    - recipe[chef-solo-search]
 
 suites:
 - name: default
   run_list:
-    - recipe[chef-solo-search]
-    - recipe[apt]
     - recipe[margarine]
+  attributes: {}
+
+- name: tinge
+  run_list:
+    - recipe[margarine::tinge]
+  attributes: {}
+
+- name: blend
+  run_list:
+    - recipe[margarine::blend]
+  attributes: {}
+
+- name: spread
+  run_list:
+    - recipe[margarine::spread]
   attributes: {}
