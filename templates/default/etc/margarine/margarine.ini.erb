@@ -4,12 +4,13 @@
 endpoint = <%= node['margarine']['urls']['blend'] %>
 
 <% end -%>
-<% if node['margarine']['service']['provider'] == :flask -%>
+<% if node['margarine']['service']['provider'] == 'flask' -%>
 [flask]
 <% if node['margarine']['flask']['debug'] -%>
 debug = true
 <% end -%>
-# TODO Add hostname and port to configuration.
+host = <%= node['margarine']['service']['hostname'] %>
+port = <%= node['margarine']['service']['port'] %>
 
 <% end -%>
 <% if node['margarine']['blend'] || node['margarine']['spread'] -%>
