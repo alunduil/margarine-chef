@@ -16,4 +16,4 @@ stop on runlevel [!345]
 <% if node['margarine']['install']['method'] == 'source' -%>
 env PYTHONPATH=<%= node['margarine']['install']['path'] %>
 <% end -%>
-exec <%= node['margarine']['install']['method'] == 'source' ? node['margarine']['install']['path'] : '' %>/bin/<%= @service %>
+exec <%= node['margarine']['install']['method'] =~ /source|vagrant/ ? node['margarine']['install']['path'] : '' %>/bin/<%= @service %>
