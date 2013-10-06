@@ -40,7 +40,7 @@ default['margarine']['flask']['debug'] = false
 default['margarine']['urls']['tinge'] = 'http://' + node['hostname']
 default['margarine']['urls']['blend'] = 'http://api.' + node['hostname'] + '/v1/'
 
-default['margarien']['datastore']['type'] = 'mongodb'
+default['margarine']['datastore']['type'] = 'mongodb'
 default['margarine']['datastore']['username'] = nil
 default['margarine']['datastore']['password'] = nil
 default['margarine']['datastore']['hostname'] = 'localhost'
