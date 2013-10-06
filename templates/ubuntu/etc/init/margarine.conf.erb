@@ -1,9 +1,10 @@
-description "Margarine daemon process."
+description "Margarine Daemon: <%= @service %>"
+author "Alex Brandt <alunduil@alunduil.com>"
 
 setuid <%= node['margarine']['user'] %>
 setgid <%= node['margarine']['group'] %>
 
-console output
+console log
 
 start on ((
      started network-interface
@@ -13,7 +14,7 @@ start on ((
 
 stop on runlevel [!345]
 
-<% if node['margarine']['install']['method'] == 'source' -%>
+<% if node['margarine']['install']['method'] =~ /source|vagrant/ -%>
 env PYTHONPATH=<%= node['margarine']['install']['path'] %>
 <% end -%>
 exec <%= node['margarine']['install']['method'] =~ /source|vagrant/ ? node['margarine']['install']['path'] : '' %>/bin/<%= @service %>
