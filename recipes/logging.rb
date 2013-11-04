@@ -44,8 +44,11 @@ if node['margarine']['logging']['default']
 end
 
 search(:margarine_loggers, '*:*').each do |logger|
-  loggers[logger.delete(:id)] = logger
+  loggers[logger.delete('id')] = logger
 end
+
+Chef::Log.info("found #{loggers.length} loggers")
+Chef::Log.debug("loggers: #{loggers.keys}")
 
 handlers = {
   'stream_h'=> {
@@ -75,8 +78,11 @@ handlers = {
 }
 
 search(:margarine_handlers, '*:*').each do |handler|
-  handlers[handler.delete(:id)] = handler
+  handlers[handler.delete('id')] = handler
 end
+
+Chef::Log.info("found #{handlers.length} handlers")
+Chef::Log.debug("handlers: #{handlers.keys}")
 
 formatters = {
   'default_f' => {
@@ -88,8 +94,11 @@ formatters = {
 }
 
 search(:margarine_formatters, '*:*').each do |formatter|
-  formatters[formatter.delete(:id)] = formatter
+  formatters[formatter.delete('id')] = formatter
 end
+
+Chef::Log.info("found #{formatters.length} formatters")
+Chef::Log.debug("formatters: #{formatters.keys}")
 
 template '/etc/margarine/logging.ini' do
   source 'etc/margarine/logging.ini.erb'
