@@ -27,6 +27,7 @@ default['margarine']['group'] = 'margarine'
 
 default['margarine']['install']['method'] = 'source' 
 default['margarine']['install']['path'] = '/margarine'
+default['margarine']['install']['version'] = '1.0.0_alpha'
 
 default['margarine']['logging']['default'] = false
 

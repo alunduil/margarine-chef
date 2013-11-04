@@ -26,7 +26,7 @@ package 'git'
 
 deploy node['margarine']['install']['path'] do
   repository 'https://github.com/raxsavvy/margarine.git'
-  revision '1.0.0_alpha'
+  revision node['margarine']['install']['version']
 
   user node['margarine']['user']
   group node['margarine']['group']
