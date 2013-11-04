@@ -31,7 +31,7 @@ package 'nginx'
       :name => node['margarine']['urls'][service].sub('http://', '').sub(/\/v\d+\//, ''),
     )
     notifies :restart, 'service[nginx]'
-    only_if { node['margarine'][service] =~ /tinge|blend/i }
+    only_if { node['margarine'][service] }
   end
 end
 
