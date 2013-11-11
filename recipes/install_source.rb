@@ -25,7 +25,7 @@ include_recipe 'margarine::user'
 package 'git'
 
 deploy node['margarine']['install']['path'] do
-  repository 'https://github.com/raxsavvy/margarine.git'
+  repository node['margarine']['install']['repository']
   revision node['margarine']['install']['version']
 
   user node['margarine']['user']
