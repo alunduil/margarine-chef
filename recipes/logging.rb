@@ -85,13 +85,13 @@ handlers = {
     :class => 'handlers.SysLogHandler',
     :level => :INFO,
     :formatter => 'default_f',
-    :args => '("/dev/log", LOG_DAEMON, )',
+    :args => '("/dev/log", handlers.SysLogHandler.LOG_DAEMON, )',
   },
   'syslog_debug_h' => {
     :class => 'handlers.SysLogHandler',
     :level => :DEBUG,
     :formatter => 'default_debug_f',
-    :args => '("/dev/log", LOG_DAEMON, )',
+    :args => '("/dev/log", handlers.SysLogHandler.LOG_DAEMON, )',
   },
 }
 
