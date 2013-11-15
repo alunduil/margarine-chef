@@ -24,7 +24,10 @@ include_recipe 'margarine::user'
 
 package 'git'
 
-deploy node['margarine']['install']['path'] do
+Chef::Log.info("install path: #{node['margarine']['install']['path'].sub(/\/current$/, '')}")
+Chef::Log.debug("margarine.install.path raw: #{node['margarine']['install']['path']}")
+
+deploy node['margarine']['install']['path'].sub(/\/current$/, '') do
   repository node['margarine']['install']['repository']
   revision node['margarine']['install']['version']
 
@@ -39,4 +42,6 @@ deploy node['margarine']['install']['path'] do
   symlinks Hash.new
 end
 
-node.set['margarine']['install']['path'] = node['margarine']['install']['path'] + '/current'
+unless node['margarine']['install']['path'].end_with?('/current')
+  node.set['margarine']['install']['path'] += '/current'
+end
