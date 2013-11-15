@@ -31,6 +31,7 @@ default['margarine']['install']['version'] = '1.0.0_alpha'
 default['margarine']['install']['repository'] = 'https://github.com/raxsavvy/margarine.git'
 
 default['margarine']['logging']['default'] = false
+default['margarine']['logging']['directory'] = '/var/log/margarine'
 
 default['margarine']['service']['provider'] = :uwsgi
 default['margarine']['service']['hostname'] = 'localhost' 
