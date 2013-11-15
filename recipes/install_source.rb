@@ -43,5 +43,5 @@ deploy node['margarine']['install']['path'].sub(/\/current$/, '') do
 end
 
 unless node['margarine']['install']['path'].end_with?('/current')
-  node.set['margarine']['install']['path'] += '/current'
+  node.set['margarine']['install']['path'] = node['margarine']['install']['path'] + '/current'
 end
