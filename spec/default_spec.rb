@@ -2,7 +2,7 @@ require 'spec_helper'
  
 describe 'margarine::default' do
   let(:chef_run) do
-    run = ChefSpec::ChefRunner.new(platform: 'ubuntu', version: '12.04')
+    run = ChefSpec::Runner.new(platform: 'ubuntu', version: '12.04')
     run.converge('margarine::default')
   end
  
