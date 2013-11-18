@@ -5,7 +5,6 @@ group :integration do
   gem 'test-kitchen', '~> 1.0.0.beta.4'
   gem 'kitchen-vagrant', github: 'opscode/kitchen-vagrant'
   gem 'kitchen-rackspace'
-  gem 'chefspec'
   gem 'foodcritic'
   gem 'strainer'
   gem 'knife-spork'
