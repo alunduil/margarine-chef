@@ -2,6 +2,7 @@
 .vagrant
 .kitchen
 *.lock
+vendor
 ###
 # Ignore Chef key files and secrets
 ###
