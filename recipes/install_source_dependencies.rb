@@ -31,8 +31,7 @@ python_pip 'beautifulsoup4'
 # TODO Change with objectstore updates.
 python_pip 'pyrax'
 
-case node['margarine']['install']['devtools']
-when 'true'
+if node['margarine']['install']['test']
   python_pip 'nose'
   python_pip 'mock'
   python_pip 'coverage'
