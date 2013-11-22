@@ -28,17 +28,17 @@ if node['margarine']['logging']['default']
   loggers = {
     'root' => {
       :level => :INFO,
-      :handlers => 'syslog_h',
+      :handlers => 'file_h',
     },
     'margarine'=> {
       :level => :INFO,
       :qualname => 'margarine',
-      :handlers => 'syslog_h',
+      :handlers => 'file_h',
     },
     'margarine_debug' => {
       :level => :DEBUG,
       :qualname => 'margarine',
-      :handlers => 'syslog_debug_h',
+      :handlers => 'file_debug_h',
     },
   }
 end
@@ -49,6 +49,12 @@ end
 
 Chef::Log.info("found #{loggers.length} loggers")
 Chef::Log.debug("loggers: #{loggers.keys}")
+
+directory node['margarine']['logging']['directory'] do
+  owner node['margarine']['user']
+  group node['margarine']['group']
+  mode "0755"
+end
 
 handlers = {
   'stream_h'=> {
@@ -63,17 +69,29 @@ handlers = {
     :formatter => 'default_debug_f',
     :args => '(sys.stderr,)',
   },
+  'file_h' => {
+    :class => 'FileHandler',
+    :level => :INFO,
+    :formatter => 'default_f',
+    :args => "('#{node['margarine']['logging']['directory']}/margarine.log',)",
+  },
+  'file_debug_h' => {
+    :class => 'FileHandler',
+    :level => :DEBUG,
+    :formatter => 'default_debug_f',
+    :args => "('#{node['margarine']['logging']['directory']}/margarine.debug.log',)",
+  },
   'syslog_h' => {
     :class => 'handlers.SysLogHandler',
     :level => :INFO,
     :formatter => 'default_f',
-    :args => '()',
+    :args => '("/dev/log", handlers.SysLogHandler.LOG_DAEMON, )',
   },
   'syslog_debug_h' => {
     :class => 'handlers.SysLogHandler',
     :level => :DEBUG,
     :formatter => 'default_debug_f',
-    :args => '()',
+    :args => '("/dev/log", handlers.SysLogHandler.LOG_DAEMON, )',
   },
 }
 

@@ -32,6 +32,7 @@ default['margarine']['install']['repository'] = 'https://github.com/raxsavvy/mar
 default['margarine']['install']['devtools'] = false
 
 default['margarine']['logging']['default'] = false
+default['margarine']['logging']['directory'] = '/var/log/margarine'
 
 default['margarine']['service']['provider'] = :uwsgi
 default['margarine']['service']['hostname'] = 'localhost' 
