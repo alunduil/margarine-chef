@@ -31,6 +31,13 @@ python_pip 'beautifulsoup4'
 # TODO Change with objectstore updates.
 python_pip 'pyrax'
 
+case node['margarine']['install']['devtools']
+when 'true'
+  python_pip 'nose'
+  python_pip 'mock'
+  python_pip 'coverage'
+end
+
 case node['margarine']['queue']['type']
 when 'amqp'
   python_pip 'pika' do
