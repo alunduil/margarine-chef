@@ -31,12 +31,6 @@ python_pip 'beautifulsoup4'
 # TODO Change with objectstore updates.
 python_pip 'pyrax'
 
-if node['margarine']['install']['test']
-  python_pip 'nose'
-  python_pip 'mock'
-  python_pip 'coverage'
-end
-
 case node['margarine']['queue']['type']
 when 'amqp'
   python_pip 'pika' do
@@ -52,4 +46,10 @@ end
 case node['margarine']['token_store']['type']
 when 'redis'
   python_pip 'redis'
+end
+
+if node['margarine']['install']['test']
+    python_pip 'nose'
+    python_pip 'mock'
+    python_pip 'coverage'
 end
