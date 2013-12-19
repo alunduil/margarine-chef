@@ -13,18 +13,9 @@ Vagrant.configure("2") do |config|
 
   [ :tinge, :blend, :spread ].each do |component|
     config.vm.define component do |box|
+      box.vm.synced_folder '.', '/vagrant', :disabled => true
+
       box.vm.provision :chef_solo do |chef|
-        chef.data_bags_path = 'data_bags'
-
-        chef.json = {
-          :margarine => {
-            :logging => {
-              :default => true,
-            },
-          },
-        }
-
-        chef.add_recipe 'chef-solo-search'
         chef.add_recipe 'apt'
         chef.add_recipe "margarine::#{component}"
       end
@@ -32,18 +23,9 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define 'margarine' do |margarine|
+    margarine.vm.synced_folder '.', '/vagrant', :disabled => true
+
     margarine.vm.provision :chef_solo do |chef|
-      chef.data_bags_path = 'data_bags'
-
-      chef.json = {
-        :margarine => {
-          :logging => {
-            :default => true,
-          },
-        },
-      }
-
-      chef.add_recipe 'chef-solo-search'
       chef.add_recipe 'apt'
       chef.add_recipe 'margarine'
     end

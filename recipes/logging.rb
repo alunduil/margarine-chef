@@ -18,105 +18,13 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-if Chef::Config[:solo] && !node['recipes'].include?('chef-solo-search')
-  Chef::Application.fatal!('When running chef-solo the chef-solo-search cookbook must be in your run_list!')
+unless node['margarine']['logging']['directory'].nil?
+  directory node['margarine']['logging']['directory'] do
+    owner node['margarine']['user']
+    group node['margarine']['group']
+    mode '0755'
+  end
 end
-
-loggers = {}
-
-if node['margarine']['logging']['default']
-  loggers = {
-    'root' => {
-      :level => :INFO,
-      :handlers => 'file_h',
-    },
-    'margarine'=> {
-      :level => :INFO,
-      :qualname => 'margarine',
-      :handlers => 'file_h',
-    },
-    'margarine_debug' => {
-      :level => :DEBUG,
-      :qualname => 'margarine',
-      :handlers => 'file_debug_h',
-    },
-  }
-end
-
-search(:margarine_loggers, '*:*').each do |logger|
-  loggers[logger.delete('id')] = logger
-end
-
-Chef::Log.info("found #{loggers.length} loggers")
-Chef::Log.debug("loggers: #{loggers.keys}")
-
-directory node['margarine']['logging']['directory'] do
-  owner node['margarine']['user']
-  group node['margarine']['group']
-  mode "0755"
-end
-
-handlers = {
-  'stream_h'=> {
-    :class => 'StreamHandler',
-    :level => :INFO,
-    :formatter => 'default_f',
-    :args => '(sys.stderr,)',
-  },
-  'stream_debug_h' => {
-    :class => 'StreamHandler',
-    :level => :DEBUG,
-    :formatter => 'default_debug_f',
-    :args => '(sys.stderr,)',
-  },
-  'file_h' => {
-    :class => 'FileHandler',
-    :level => :INFO,
-    :formatter => 'default_f',
-    :args => "('#{node['margarine']['logging']['directory']}/margarine.log',)",
-  },
-  'file_debug_h' => {
-    :class => 'FileHandler',
-    :level => :DEBUG,
-    :formatter => 'default_debug_f',
-    :args => "('#{node['margarine']['logging']['directory']}/margarine.debug.log',)",
-  },
-  'syslog_h' => {
-    :class => 'handlers.SysLogHandler',
-    :level => :INFO,
-    :formatter => 'default_f',
-    :args => '("/dev/log", handlers.SysLogHandler.LOG_DAEMON, )',
-  },
-  'syslog_debug_h' => {
-    :class => 'handlers.SysLogHandler',
-    :level => :DEBUG,
-    :formatter => 'default_debug_f',
-    :args => '("/dev/log", handlers.SysLogHandler.LOG_DAEMON, )',
-  },
-}
-
-search(:margarine_handlers, '*:*').each do |handler|
-  handlers[handler.delete('id')] = handler
-end
-
-Chef::Log.info("found #{handlers.length} handlers")
-Chef::Log.debug("handlers: #{handlers.keys}")
-
-formatters = {
-  'default_f' => {
-    :format => '%(name)s:%(levelname)s: %(process)d: %(message)s',
-  },
-  'default_debug_f' => {
-    :format => '%(filename)s:%(lineno)d: %(process)d: %(message)s',
-  },
-}
-
-search(:margarine_formatters, '*:*').each do |formatter|
-  formatters[formatter.delete('id')] = formatter
-end
-
-Chef::Log.info("found #{formatters.length} formatters")
-Chef::Log.debug("formatters: #{formatters.keys}")
 
 template '/etc/margarine/logging.ini' do
   source 'etc/margarine/logging.ini.erb'
@@ -124,8 +32,8 @@ template '/etc/margarine/logging.ini' do
   group node['margarine']['group']
   mode 00600
   variables(
-    :loggers => loggers,
-    :handlers => handlers,
-    :formatters => formatters,
+    :loggers => node['margarine']['logging']['loggers'],
+    :handlers => node['margarine']['logging']['handlers'],
+    :formatters => node['margarine']['logging']['formatters'],
   )
 end

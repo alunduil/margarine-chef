@@ -141,19 +141,9 @@ following configuration files are created:
 - logging.ini
 - pyrax.ini
 
-The logging configuration merges with loggers, handlers, and formatters (see
-python's logging configuration documentation for more information) defined in
-the following data_bags:
-
-- margarine_loggers
-- margarine_handlers
-- margarine_formatters
-
-If you would like to have margarine just use syslog mechanisms you can specify
-that the default defined loggers be used by setting the following attribute to
-true:
-
-- ``node['margarine']['logging']['default']``
+The logging configuration has been updated to read from the node attributes and
+will merge with the defaults appropriately (or be overwritten appropriately as
+well).
 
 ### service
 

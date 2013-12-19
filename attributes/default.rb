@@ -30,9 +30,6 @@ default['margarine']['install']['path'] = '/margarine'
 default['margarine']['install']['version'] = '1.0.0_alpha'
 default['margarine']['install']['repository'] = 'https://github.com/raxsavvy/margarine.git'
 
-default['margarine']['logging']['default'] = false
-default['margarine']['logging']['directory'] = '/var/log/margarine'
-
 default['margarine']['service']['provider'] = :uwsgi
 default['margarine']['service']['hostname'] = 'localhost' 
 default['margarine']['service']['port'] = 5000
@@ -68,8 +65,6 @@ default['margarine']['token_store']['password'] = nil
 default['margarine']['token_store']['hostname'] = 'localhost'
 default['margarine']['token_store']['port'] = 6379
 
-# Data Bags for logging configuration items.
-
 default['margarine']['queue']['type'] = 'amqp'
 default['margarine']['queue']['username'] = 'guest'
 default['margarine']['queue']['password'] = 'guest'
@@ -79,3 +74,45 @@ default['margarine']['queue']['wait'] = 5
 
 default['margarine']['security']['uuid'] = nil
 
+default['margarine']['logging']['directory'] = '/var/log/margarine'
+
+default['margarine']['logging']['loggers'] = {
+  'root' => {
+    :level => :INFO,
+    :handlers => 'file_h',
+  },
+  'margarine' => {
+    :level => :INFO,
+    :qualname => 'margarine',
+    :handlers => 'file_h',
+  },
+  'margarine_debug' => {
+    :level => :DEBUG,
+    :qualname => 'margarine',
+    :handlers => 'file_debug_h',
+  },
+}
+
+default['margarine']['logging']['handlers'] = {
+  'file_h' => {
+    :class => 'FileHandler',
+    :level => :INFO,
+    :formatter => 'default_f',
+    :args => "('#{node['margarine']['logging']['directory']}/margarine.log',)",
+  },
+  'file_debug_h' => {
+    :class => 'FileHandler',
+    :level => :DEBUG,
+    :formatter => 'default_debug_f',
+    :args => "('#{node['margarine']['logging']['directory']}/margarine.debug.log',)",
+  },
+}
+
+default['margarine']['logging']['formatters'] = {
+  'default_f' => {
+    :format => '%(name)s:%(levelname)s: %(process)d: %(message)s',
+  },
+  'default_debug_f' => {
+    :format => '%(filename)s:%(lineno)d: %(process)d: %(message)s',
+  },
+}
