@@ -24,6 +24,8 @@ else
   package 'python-pip' # TODO Platform independent naming.
 end
 
+python_pip 'crumbs'
+
 python_pip 'flask'
 
 python_pip 'beautifulsoup4'
