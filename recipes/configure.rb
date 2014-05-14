@@ -18,12 +18,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-directory '/var/log/margarine' do
-  owner node['margarine']['user']
-  group node['margarine']['group']
-  mode 00755
-end
-
 directory '/etc/margarine' do
   owner node['margarine']['user']
   group node['margarine']['group']
@@ -38,11 +32,4 @@ template '/etc/margarine/margarine.ini' do
   helpers(::Margarine::Helpers)
 end
 
-include_recipe 'margarine::logging'
-
-template '/etc/margarine/pyrax.ini' do
-  source 'etc/margarine/pyrax.ini.erb'
-  owner node['margarine']['user']
-  group node['margarine']['group']
-  mode 00600
-end
+include_recipe 'margarine::configure_logging'

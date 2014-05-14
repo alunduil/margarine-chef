@@ -18,6 +18,15 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-include_recipe "margarine::install_#{node['margarine']['install']['method']}"
+group node['margarine']['group'] do
+  system true
+end
 
-include_recipe "margarine::user"
+user node['margarine']['user'] do
+  comment 'Created for Margarine by Chef'
+  gid node['margarine']['group']
+  shell '/sbin/nologin'
+  system true
+end
+
+include_recipe "margarine::install_#{node['margarine']['install']['method']}"

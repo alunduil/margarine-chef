@@ -18,25 +18,19 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-default['margarine']['tinge'] = false
-default['margarine']['blend'] = false
-default['margarine']['spread'] = false
+default['margarine']['components'] = [ 'blend', 'spread' ]
 
 default['margarine']['user'] = 'margarine'
 default['margarine']['group'] = 'margarine'
 
-default['margarine']['install']['method'] = 'source' 
-default['margarine']['install']['path'] = '/margarine'
-default['margarine']['install']['version'] = '1.0.0_alpha'
-default['margarine']['install']['repository'] = 'https://github.com/raxsavvy/margarine.git'
-default['margarine']['install']['test'] = false
+default['margarine']['install']['method'] = 'pip' 
+default['margarine']['install']['commit'] = 'master'
+default['margarine']['install']['repository'] = 'git+https://github.com/raxsavvy/margarine.git'
 
 default['margarine']['service']['provider'] = :uwsgi
 default['margarine']['service']['hostname'] = 'localhost' 
 default['margarine']['service']['port'] = 5000
 default['margarine']['service']['proxy'] = nil
-
-default['margarine']['flask']['debug'] = false
 
 default['margarine']['urls']['tinge'] = 'http://' + node['hostname']
 default['margarine']['urls']['blend'] = 'http://api.' + node['hostname'] + '/v1/'
@@ -47,11 +41,6 @@ default['margarine']['datastore']['password'] = nil
 default['margarine']['datastore']['hostname'] = 'localhost'
 default['margarine']['datastore']['port'] = 27017
 default['margarine']['datastore']['database'] = 'production'
-
-# TODO Watch for URI change coming in margarine.
-default['margarine']['pyrax']['username'] = nil
-default['margarine']['pyrax']['password'] = nil
-default['margarine']['pyrax']['type'] = 'rackspace'
 
 default['margarine']['email']['type'] = 'smtp'
 default['margarine']['email']['username'] = nil

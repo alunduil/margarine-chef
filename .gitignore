@@ -5,8 +5,8 @@
 ###
 # Ignore Chef key files and secrets
 ###
-.chef/*.pem
-.chef/encrypted_data_bag_secret
+.chef/
+.chef
 
 # OS X ignore files
 _Store

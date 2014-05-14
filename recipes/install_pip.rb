@@ -18,10 +18,8 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-if node['margarine']['install']['pip']
-  include_recipe 'python::pip'
-else
-  package 'python-pip' # TODO Platform independent naming.
-end
+include_recipe 'python::package'
+include_recipe 'python::pip'
+include_recipe 'build-essential'
 
-python_pip 'margarine'
+python_pip node['margarine']['install']['repository'] + '@' + node['margarine']['install']['commit']

@@ -18,8 +18,6 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-include_recipe 'margarine::mark_components'
-
-include_recipe 'margarine::tinge'
-include_recipe 'margarine::blend'
-include_recipe 'margarine::spread'
+include_recipe 'margarine::install'
+include_recipe 'margarine::configure'
+include_recipe 'margarine::service'

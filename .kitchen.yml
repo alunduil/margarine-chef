@@ -1,50 +1,39 @@
 ---
-driver_plugin: vagrant
-driver_config:
-  require_chef_omnibus: true
+driver:
+  name: vagrant
+
+provisioner:
+  name: chef_zero
 
 platforms:
-- name: ubuntu-12.04
-  driver_config:
-    box: opscode-ubuntu-12.04
-    box_url: https://opscode-vm-bento.s3.amazonaws.com/vagrant/opscode_ubuntu-12.04_provisionerless.box
-  run_list:
-    - recipe[apt]
-    - recipe[chef-solo-search]
+  - name: debian-7.4
+    run_list:
+      - recipe[apt]
+  - name: ubuntu-12.04
+    run_list:
+      - recipe[apt]
+  - name: ubuntu-14.04
+    run_list:
+      - recipe[apt]
 
 suites:
-- name: default
+- name: blend
   run_list:
     - recipe[margarine]
-  attributes: {}
-
-- name: tinge
-  run_list:
-    - recipe[margarine::tinge]
-  attributes: {}
-
-- name: tinge-nginx
-  run_list:
-    - recipe[margarine::tinge]
   attributes:
     margarine:
-      service:
-        proxy: nginx
-
-- name: blend
-  run_list:
-    - recipe[margarine::blend]
-  attributes:
-    margarine:
-      service:
-        proxy: nginx
-
-- name: blend
-  run_list:
-    - recipe[margarine::blend]
-  attributes: {}
+      components: ["blend"]
 
 - name: spread
   run_list:
-    - recipe[margarine::spread]
-  attributes: {}
+    - recipe[margarine]
+  attributes:
+    margarine:
+      components: ["spread"]
+
+- name: blend_and_spread
+  run_list:
+    - recipe[margarine]
+  attributes:
+    margarine:
+      components: ["blend", "spread"]

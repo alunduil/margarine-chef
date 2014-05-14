@@ -18,29 +18,28 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-if %w{ blend tinge }.any? { |s| node['margarine'][s] }
-  include_recipe "margarine::service_#{node['margarine']['service']['provider']}"
-
-  include_recipe "margarine::proxy_#{node['margarine']['service']['proxy']}" unless node['margarine']['service']['proxy'].nil?
-end
-
-if %w{ spread }.any? { |s| node['margarine'][s] }
-  template '/etc/init/spread.conf' do
-    source 'etc/init/margarine.conf.erb'
-    owner 'root'
-    group 'root'
-    mode 00644
-    variables(
-      :service => 'spread',
-    )
-    notifies :restart, 'service[spread]'
+node['margarine']['components'].each do |component|
+  case node['platform_family']
+  when 'debian'
+    template "/etc/init/#{component}.conf" do
+      source 'etc/init/margarine.conf.erb'
+      owner 'root'
+      group 'root'
+      mode 00644
+      variables(
+        :service => component,
+      )
+      notifies :restart, "service[#{component}]"
+    end
   end
 
-  service 'spread' do
-    case node['platform']
-    when 'ubuntu'
+  service component do
+    case node['platform_family']
+    when 'debian'
       provider Chef::Provider::Service::Upstart
     end
     action [ :start, :enable ]
+    subscribes :restart, 'template[/etc/margarine/margarine.ini]'
+    subscribes :restart, 'template[/etc/margarine/logging.ini]'
   end
 end
