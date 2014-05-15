@@ -10,4 +10,5 @@ supports 'debian'
 supports 'ubuntu'
 
 depends 'build-essential'
+depends 'git'
 depends 'python'

@@ -18,8 +18,9 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
+include_recipe 'build-essential'
+include_recipe 'git'
 include_recipe 'python::package'
 include_recipe 'python::pip'
-include_recipe 'build-essential'
 
 python_pip node['margarine']['install']['repository'] + '@' + node['margarine']['install']['commit']
