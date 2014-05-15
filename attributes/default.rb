@@ -102,6 +102,6 @@ default['margarine']['logging']['formatters'] = {
     format: '%(name)s:%(levelname)s: %(process)d: %(message)s',
   },
   default_debug_f: {
-    format: '%(filename)s:%(lineno)d: %(process)d: %(message)s',
+    format: '%(pathname)s:%(lineno)d: %(process)d: %(message)s',
   },
 }
