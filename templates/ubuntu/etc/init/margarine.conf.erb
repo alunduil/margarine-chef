@@ -7,11 +7,8 @@ setgid <%= node['margarine']['group'] %>
 console log
 
 start on (
-  (
-       started network-services
-    or started networking
-  )
-  and started rsyslog
+     started network-services
+  or started networking
 )
 
 stop on (
@@ -19,7 +16,4 @@ stop on (
   or stopping networking
 )
 
-<% if node['margarine']['install']['method'] =~ /source|vagrant/ -%>
-env PYTHONPATH=<%= node['margarine']['install']['path'] %>
-<% end -%>
-exec <%= node['margarine']['install']['method'] =~ /source|vagrant/ ? node['margarine']['install']['path'] : '' %>/bin/<%= @service %>
+exec /usr/local/bin/<%= @service %>
