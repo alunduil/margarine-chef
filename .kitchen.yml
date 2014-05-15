@@ -24,16 +24,16 @@ suites:
     margarine:
       components: ["blend"]
 
-- name: spread
-  run_list:
-    - recipe[margarine]
-  attributes:
-    margarine:
-      components: ["spread"]
-
 - name: blend_and_spread
   run_list:
     - recipe[margarine]
   attributes:
     margarine:
       components: ["blend", "spread"]
+
+- name: spread
+  run_list:
+    - recipe[margarine]
+  attributes:
+    margarine:
+      components: ["spread"]

@@ -19,23 +19,29 @@
 # THE SOFTWARE.
 
 node['margarine']['components'].each do |component|
-  case node['platform_family']
-  when 'debian'
-    template "/etc/init/#{component}.conf" do
-      source 'etc/init/margarine.conf.erb'
-      owner 'root'
-      group 'root'
-      mode 00644
-      variables(
-        :service => component,
-      )
-      notifies :restart, "service[#{component}]"
-    end
+  case node['platform']
+  when 'ubuntu'
+    template_name = "/etc/init/#{component}.conf"
+    template_source = '/etc/init/margarine.conf.erb'
+  else
+    template_name = "/etc/init.d/#{component}"
+    template_source = '/etc/init.d/margarine.erb'
+  end
+
+  template template_name do
+    source template_source
+    owner 'root'
+    group 'root'
+    mode node['platform'] == 'ubuntu' ? 00644 : 00755 
+    variables(
+      :service => component,
+    )
+    notifies :restart, "service[#{component}]"
   end
 
   service component do
-    case node['platform_family']
-    when 'debian'
+    case node['platform']
+    when 'ubuntu'
       provider Chef::Provider::Service::Upstart
     end
     action [ :start, :enable ]
