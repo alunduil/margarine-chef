@@ -1,39 +1,21 @@
-<% if node['margarine']['tinge'] -%>
-# TODO Update this with new sections when necessary.
-[api]
-endpoint = <%= node['margarine']['urls']['blend'] %>
-
-<% end -%>
-<% if node['margarine']['service']['provider'] == 'flask' -%>
-[flask]
-<% if node['margarine']['flask']['debug'] -%>
-debug = true
-<% end -%>
-host = <%= node['margarine']['service']['hostname'] %>
-port = <%= node['margarine']['service']['port'] %>
-
-<% end -%>
-<% if node['margarine']['blend'] || node['margarine']['spread'] -%>
-[queue]
-url = <%= uri(node['margarine']['queue']) %>
-
 [datastore]
 url = <%= uri(node['margarine']['datastore']) %>
+
+<% if node['margarine']['components'].include?('spread') -%>
+[email]
+url = <%= uri(node['margarine']['email']) %>
+<% end -%>
 
 [keystore]
 url = <%= uri(node['margarine']['token_store']) %>
 
-# TODO Update this with new sections when necessary.
-[server]
-<% if node['margarine']['blend'] -%>
-domain = <%= node['margarine']['urls']['tinge'] %>
-<% end -%>
-<% if node['margarine']['spread'] -%>
-name = <%= node['margarine']['urls']['blend'] %>
-<% end -%>
+[queue]
+url = <%= uri(node['margarine']['queue']) %>
 
-<% end -%>
-<% if node['margarine']['spread'] -%>
-[email]
-url = <%= uri(node['margarine']['email']) %>
+[security]
+opaque = 11aec0eb-42b7-4343-ac5a-e1dd851f77e0
+
+<% if node['margarine']['components'].include?('blend') -%>
+[tornado]
+address = 0.0.0.0
 <% end -%>

@@ -60,7 +60,6 @@ default['margarine']['queue']['username'] = 'guest'
 default['margarine']['queue']['password'] = 'guest'
 default['margarine']['queue']['hostname'] = 'localhost'
 default['margarine']['queue']['port'] = 5672
-default['margarine']['queue']['wait'] = 5
 
 default['margarine']['security']['uuid'] = nil
 
