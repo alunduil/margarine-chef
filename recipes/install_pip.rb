@@ -23,4 +23,4 @@ include_recipe 'git'
 include_recipe 'python::package'
 include_recipe 'python::pip'
 
-python_pip node['margarine']['install']['repository'] + '@' + node['margarine']['install']['commit']
+python_pip node['margarine']['install']['repository'] + '@' + node['margarine']['install']['commit'] # rubocop:disable LineLength

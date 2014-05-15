@@ -32,8 +32,8 @@ template '/etc/margarine/logging.ini' do
   group node['margarine']['group']
   mode 00600
   variables(
-    :loggers => node['margarine']['logging']['loggers'],
-    :handlers => node['margarine']['logging']['handlers'],
-    :formatters => node['margarine']['logging']['formatters'],
+    loggers: node['margarine']['logging']['loggers'],
+    handlers: node['margarine']['logging']['handlers'],
+    formatters: node['margarine']['logging']['formatters'],
   )
 end

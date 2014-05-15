@@ -19,11 +19,12 @@
 # THE SOFTWARE.
 
 module Margarine
+  # Margarine namespace
   module Helpers
     # Public: Put components together into a valid URI.
     #
     # components - The Hash containing the following items and optionally
-    #              any others: type, username, password, hostname, port, and 
+    #              any others: type, username, password, hostname, port, and
     #              database.
     #
     # Returns the URI based on the components.
@@ -60,6 +61,5 @@ module Margarine
 
       str
     end
-
   end
 end

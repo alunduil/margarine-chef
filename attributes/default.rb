@@ -18,22 +18,22 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 # THE SOFTWARE.
 
-default['margarine']['components'] = [ 'blend', 'spread' ]
+default['margarine']['components'] = ['blend', 'spread']
 
 default['margarine']['user'] = 'margarine'
 default['margarine']['group'] = 'margarine'
 
-default['margarine']['install']['method'] = 'pip' 
+default['margarine']['install']['method'] = 'pip'
 default['margarine']['install']['commit'] = 'master'
-default['margarine']['install']['repository'] = 'git+https://github.com/raxsavvy/margarine.git'
+default['margarine']['install']['repository'] = 'git+https://github.com/raxsavvy/margarine.git' # rubocop:disable LineLength
 
 default['margarine']['service']['provider'] = :uwsgi
-default['margarine']['service']['hostname'] = 'localhost' 
+default['margarine']['service']['hostname'] = 'localhost'
 default['margarine']['service']['port'] = 5000
 default['margarine']['service']['proxy'] = nil
 
 default['margarine']['urls']['tinge'] = 'http://' + node['hostname']
-default['margarine']['urls']['blend'] = 'http://api.' + node['hostname'] + '/v1/'
+default['margarine']['urls']['blend'] = 'http://api.' + node['hostname'] + '/v1/' # rubocop:disable LineLength
 
 default['margarine']['datastore']['type'] = 'mongodb'
 default['margarine']['datastore']['username'] = nil
@@ -67,42 +67,42 @@ default['margarine']['security']['uuid'] = nil
 default['margarine']['logging']['directory'] = '/var/log/margarine'
 
 default['margarine']['logging']['loggers'] = {
-  'root' => {
-    :level => :INFO,
-    :handlers => 'file_h',
+  root: {
+    level: :INFO,
+    handlers: 'file_h',
   },
-  'margarine' => {
-    :level => :INFO,
-    :qualname => 'margarine',
-    :handlers => 'file_h',
+  margarine: {
+    level: :INFO,
+    qualname: 'margarine',
+    handlers: 'file_h',
   },
-  'margarine_debug' => {
-    :level => :DEBUG,
-    :qualname => 'margarine',
-    :handlers => 'file_debug_h',
+  margarine_debug: {
+    level: :DEBUG,
+    qualname: 'margarine',
+    handlers: 'file_debug_h',
   },
 }
 
 default['margarine']['logging']['handlers'] = {
-  'file_h' => {
-    :class => 'FileHandler',
-    :level => :INFO,
-    :formatter => 'default_f',
-    :args => "('#{node['margarine']['logging']['directory']}/margarine.log',)",
+  file_h: {
+    class: 'FileHandler',
+    level: :INFO,
+    formatter: 'default_f',
+    args: "('#{node['margarine']['logging']['directory']}/margarine.log',)",
   },
-  'file_debug_h' => {
-    :class => 'FileHandler',
-    :level => :DEBUG,
-    :formatter => 'default_debug_f',
-    :args => "('#{node['margarine']['logging']['directory']}/margarine.debug.log',)",
+  file_debug_h: {
+    class: 'FileHandler',
+    level: :DEBUG,
+    formatter: 'default_debug_f',
+    args: "('#{node['margarine']['logging']['directory']}/margarine.debug.log',)", # rubocop:disable LineLength
   },
 }
 
 default['margarine']['logging']['formatters'] = {
-  'default_f' => {
-    :format => '%(name)s:%(levelname)s: %(process)d: %(message)s',
+  default_f: {
+    format: '%(name)s:%(levelname)s: %(process)d: %(message)s',
   },
-  'default_debug_f' => {
-    :format => '%(filename)s:%(lineno)d: %(process)d: %(message)s',
+  default_debug_f: {
+    format: '%(filename)s:%(lineno)d: %(process)d: %(message)s',
   },
 }

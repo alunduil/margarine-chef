@@ -32,9 +32,9 @@ node['margarine']['components'].each do |component|
     source template_source
     owner 'root'
     group 'root'
-    mode node['platform'] == 'ubuntu' ? 00644 : 00755 
+    mode node['platform'] == 'ubuntu' ? 00644 : 00755
     variables(
-      :service => component,
+      service: component,
     )
     notifies :restart, "service[#{component}]"
   end
@@ -44,7 +44,7 @@ node['margarine']['components'].each do |component|
     when 'ubuntu'
       provider Chef::Provider::Service::Upstart
     end
-    action [ :start, :enable ]
+    action [:start, :enable]
     subscribes :restart, 'template[/etc/margarine/margarine.ini]'
     subscribes :restart, 'template[/etc/margarine/logging.ini]'
   end
