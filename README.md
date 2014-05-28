@@ -1,7 +1,7 @@
 margarine Cookbook
 ==================
 
-This cookbook is used to deploy margarine on a system or set of systems.
+This cookbook is used to deploy margarine on a system or set of systems. This cookbook expects to you to override a number of it's settings a may not work "out of the box".
 
 Requirements
 ------------
@@ -13,13 +13,10 @@ Requirements
 
 The following platforms are tested:
 
-- Ubuntu 12.04
+- Ubuntu 12.04, 14.04
+- Debian 7.4
 
-The following platforms are known to work:
-
-- N/A
-
-Other platforms may or may not work as intended or desired.
+Other platforms may or may not work as intended or desired but probably not.
 
 ### Cookbook Dependencies
 
@@ -27,13 +24,8 @@ The following cookbooks are dependencies and required for this cookbook to
 function:
 
 - python
-
-The following cookbooks are suggested but not required for the cookbook's basic
-functionality:
-
-- N/A
-
-See __USAGE__ below for more information.
+- git
+- build-essential
 
 Attributes
 ----------
@@ -41,7 +33,7 @@ Attributes
 The following attributes affect the behaviour of the deployment of margarine.
 The commonly changed attributes are listed first followed by less commonly
 modified attributes.
-
+* `node['margarine']['components']` - Sets which componentns components to install/enable on a specific node. Defaults to both `blend` and `spread`.
 * `node['margarine']['service']['provider']` - Sets the service mechanism used
   to run the flask portion of margarine.  Default: uwsgi.
 * `node['margarine']['service']['hostname']` - Sets the hostname to bind the
@@ -50,6 +42,11 @@ modified attributes.
   provider to.  Default: 5000.
 * `node['margarine']['service']['proxy']` - Sets the proxy service to host the
   WSGI application behind.  Default: None.
+
+The following describe the install methods available for margarine:
+*`['margarine']['install']['method']` - Currently only `pip` is supported
+*`['margarine']['install']['commit']` - branch, ref or tag to pull. defaults to `master`
+*`['margarine']['install']['repository']` - git repo location
 
 The service attributes have a bit of overlap and the following attributes apply
 to the datastore, email, token_store and queue sections.  Thus the following
@@ -75,17 +72,6 @@ attributes should have SERVICE replaced with one of the aforementioned sections
 * `node['margarine']['email']['from']` - Sets the FROM address for outgoing
   emails that margarine produces.  Default: no-reply@HOSTNAME.
 
-Currently pyrax is used to connect to an object store and it's attributes
-should be over-written in any production environment with the following
-attributes:
-
-* `node['margarine']['pyrax']['username'] - Sets the pyrax username.  Default:
-  None.
-* `node['margarine']['pyrax']['password'] - Sets the pyrax password (API key).
-  Default: None.
-* `node['margarine']['pyrax']['type'] - Sets the authentication or service type
-  for pyrax.  Default: rackspace.
-
 The last three common attributes set deployment specific information:
 
 * `node['margarine']['urls']['tinge']` - Sets the URL that tinge (the frontend
@@ -110,8 +96,7 @@ recommended for direct usage.
 
 ### default
 
-Installs all three components of margarine on the target node by including the
-component recipes.
+Includes the necessary recipes to install, configure and start the the specific service.
 
 ### component recipes
 
@@ -128,9 +113,11 @@ These recipes include the three basic components of cconfiguration management:
 
 ### install
 
-Installs margarine based on the specified mechanism in 
-``node['margarine']['install']['method']``.  By default, this does a source
-installation and this will be changed later to a pip or package installation.
+Creates the margarine user/group. Will also include the the install type recipe which is currently `install_pip`.
+
+### install_pip
+
+Includes required recipes to set up margarine directly from git via `python_pip`. Installs margarine from `node['margarine']['install']['repository']`
 
 ### configure
 
@@ -138,8 +125,7 @@ Sets up the configuration files and required directories for margarine.  The
 following configuration files are created:
 
 - margarine.ini
-- logging.ini
-- pyrax.ini
+- logging.ini (via include recipe `configure_logging`)
 
 The logging configuration has been updated to read from the node attributes and
 will merge with the defaults appropriately (or be overwritten appropriately as
@@ -147,9 +133,7 @@ well).
 
 ### service
 
-Sets up the various services for the components of margarine installed on the
-node.  This includes WSGI handlers and proxy services (i.e. nginx or apache)
-that allow margarine to interact with the world as well.
+Sets up the various services based on the `node['margarine']['components']` array. The init files are dropped in (`/etc/init` or `/etc/init.d/` respectively) for the components of margarine installed on the node. This will also start the service(s).
 
 Usage
 -----
